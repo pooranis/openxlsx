@@ -50,7 +50,7 @@ createWorkbook <- function(creator = Sys.getenv("USERNAME")){
 #' 
 #' ## Save workbook to working directory
 #' saveWorkbook(wb, file = "saveWorkbookExample.xlsx", overwrite = TRUE) 
-saveWorkbook <- function(wb, file, overwrite = FALSE){
+saveWorkbook <- function(wb, file, overwrite = FALSE, xlsx=FALSE){
   
   wd <- getwd()
   on.exit(setwd(wd), add = TRUE)
@@ -65,7 +65,13 @@ saveWorkbook <- function(wb, file, overwrite = FALSE){
   
   #   if(!grepl("\\.xlsx", file))
   #     file <- paste0(file, ".xlsx")
-  
+  if(xlsx & !is.null(wb$vbaProject)) {
+    wb$vbaProject <- NULL
+    wb$Content_Types <- grep("vbaProject", wb$Content_Types, invert = TRUE, value= TRUE)
+    wb$Content_Types[grepl('<Override PartName="/xl/workbook.xml" ', wb$Content_Types)] <- '<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>'  
+  }
+    
+    
   if(!is.logical(overwrite))
     overwrite = FALSE
   
