@@ -4,7 +4,7 @@
 \alias{saveWorkbook}
 \title{save Workbook to file}
 \usage{
-saveWorkbook(wb, file, overwrite = FALSE)
+saveWorkbook(wb, file, overwrite = FALSE, xlsx = FALSE)
 }
 \arguments{
 \item{wb}{A Workbook object to write to file}
@@ -12,6 +12,9 @@ saveWorkbook(wb, file, overwrite = FALSE)
 \item{file}{A character string naming an xlsx file}
 
 \item{overwrite}{If \code{TRUE}, overwrite any existing file.}
+  
+\item{xlsx}{If \code{TRUE}, removes any existing macros from 
+            Workbook before saving as xlsx formatted file}
 }
 \description{
 save a Workbook object to file
